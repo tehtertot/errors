@@ -1,0 +1,61 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="row">
+  <h4>Sign Up</h4>
+  <form method="POST" class="container">
+    {% csrf_token %}
+    <div class="row">
+      <div class="input-field col s6">
+        <input type="text" name="username" maxlength="45" autofocus required id="id_username">
+        <label for="id_username" class="active">Username</label>
+        <span class="blue-text">{{ form.username.errors }}</span>
+      </div>
+      <div class="input-field col s6">
+        <input type="email" name="email" maxlength="45" id="id_email">
+        <label for="id_email" class="active">Email</label>
+        <span class="blue-text">{{ form.email.errors }}</span>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="input-field col s6">
+        <input type="text" name="first_name" maxlength="45" required id="id_first_name">
+        <label for="id_first_name" class="active">First Name</label>
+        <span class="blue-text">{{ form.first_name.errors }}</span>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="last_name" maxlength="45" required id="id_last_name">
+        <label for="id_last_name" class="active">Last Name</label>
+        <span class="blue-text">{{ form.last_name.errors }}</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="text" name="favorite_candy" maxlength="45" id="id_favorite_candy">
+        <label for="id_favorite_candy" class="active">Favorite Candy/Treat</label>
+        <span class="blue-text">{{ form.favorite_candy.errors }}</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input type="password" name="password1"  required id="id_password1">
+        <label for="id_password1" class="active">Password</label>
+        <span class="blue-text">{{ form.password1.errors }}</span>
+      </div>
+      <div class="input-field col s6">
+        <input type="password" name="password2" maxlength="45" required id="id_password2">
+        <label for="id_password2" class="active">Confirm Password</label>
+        <span class="blue-text">{{ form.password2.errors }}</span>
+      </div>
+    </div>
+
+    <button type="submit" class="btn">Sign up</button>
+  </form>
+  <p><a href="/accounts/login">Already registered? Sign in here.</a></p>
+</div>
+{% endblock %}

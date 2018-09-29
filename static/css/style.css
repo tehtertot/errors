@@ -1,0 +1,39 @@
+.row {
+    text-align: center;
+    width: 95%;
+    height: 100%;
+}
+
+.row.internal {
+    width: 100%;
+}
+
+.gray-text {
+    color: #9e9e9e;
+}
+
+.text-with-icon {
+    color: #9e9e9e;
+    display: inline-flex;
+    vertical-align: sub;
+}
+    .material-icons.gray {
+        color: #9e9e9e;
+    }
+
+.xsmall-text {
+    font-size: x-small;
+}
+
+.small-text {
+    font-size: small;
+}
+
+.modal-trigger {
+    cursor: pointer;
+    color: #26c6da;
+}
+
+.regular-case {
+    text-transform: none;
+}
