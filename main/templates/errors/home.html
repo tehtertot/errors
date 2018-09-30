@@ -4,26 +4,20 @@
 {% block additionalStatic %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'errors/css/home.css' %}">
-<script src="{% static 'errors/js/filter.js' %}" defer></script>
 {% endblock %}
 
 {% block navbarContent %}
-<li>Filtering: 
-    <li style="margin: 0 10px 0 20px;">
-        <a class="menu-dropdown" href="#!" data-target="lang_dropdown">Language</a>
-    </li>
-    <li style="margin: 0 10px 0 20px;">
-        <a class="menu-dropdown" href="#!" data-target="fw_dropdown">Framework</a>
-    </li>
-</li>
-<ul id="lang_dropdown" class="dropdown-content">
-    <li><a href="">Python</a></li>
-</ul>
-<ul id="fw_dropdown" class="dropdown-content">
-    <li><a href="">Fundamentals</a></li>
-    <li><a href="">Flask</a></li>
-    <li><a href="">Django</a></li>
-</ul>
+<select class="browser-default filter-menu xlarge-text" id="lang-filter" disabled>
+    <option value="2">C#</option>
+    <option value="4">Java</option>
+    <option value="3">JavaScript</option>
+    <option value="1" selected>Python</option>
+</select>
+<select class="browser-default filter-menu xlarge-text" id="frm-filter" disabled>
+    <option value="1" selected>Fundamentals</option>
+    <option value="2">Flask</option>
+    <option value="4">Django</option>
+</select>
 {% endblock%}
 
 {% block content %}
@@ -35,7 +29,7 @@
         <span class="card-title">{{e.message}}</span>
         </div>
         <div class="card-action">
-            <span>Errors submitted: {{e.images.all.count}}</span>
+            <span>Errors submitted: {{e.student_submissions.count}}</span>
         </div>
     </div>
     </a>

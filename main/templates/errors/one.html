@@ -11,12 +11,12 @@
 <script src="{% static 'errors/js/one.js' %}" defer></script>
 {% endblock %}
 
-{% block navbarContent %}<h4>{{error.message}}</h4>{% endblock %}
+{% block navbarContent %}{{error.message}}{% endblock %}
 {% block content %}
 <div class="container row">
     <div class="col s12 w3-content w3-display-container">
         <p></p>
-        {% for e in error.images.all %}
+        {% for e in error.student_submissions.all %}
             <div class="individual-slides">
                 <div class="row internal images">
                     <div class="col s4">
@@ -76,7 +76,7 @@
         <a id="add-btn" class="btn-floating btn-large modal-trigger tooltipped yellow" href="#submit-images-modal" data-tooltip="Upload my {{error.message}}" data-position="left"><i class="large material-icons">add</i>
         </a>
     </div>
-        {% if error.images.count > 1 %}
+        {% if error.student_submissions.count > 1 %}
         <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
         <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
         {% endif %}

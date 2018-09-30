@@ -1,10 +1,14 @@
 from django.db import models
 from users.models import CustomUser
 
+# CustomUser: image_sets_uploaded, explanations, 
+
 class Language(models.Model):
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+  # frameworks
+
     # values: Python, JavaScript, C#, Java
     def __repr__(self):
         return f"<Language: {self.id} - {self.name}>"
@@ -16,6 +20,7 @@ class Framework(models.Model):
     language = models.ForeignKey(Language, related_name="frameworks", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+  # framework_errors
     # values: Fundamentals, Flask, Django, ASP.NET Core, Angular, Express, Mongoose, Spring Boot
     def __repr__(self):
         return f"<Framework: {self.id} - {self.name}>"
@@ -24,9 +29,11 @@ class Framework(models.Model):
 
 class ErrorMessage(models.Model):
     message = models.CharField(max_length=50)
+    display_name = models.CharField(max_length=20, null=True)
     framework = models.ForeignKey(Framework, related_name="framework_errors", on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+  # student_submissions
     def __repr__(self):
         return f"<Keyword: {self.message}>"
     def __str__(self):
@@ -37,7 +44,8 @@ class StudentImageUpload(models.Model):
     image_code_error = models.CharField(max_length=255, null=True)
     image_code_fix = models.CharField(max_length=255, null=True)
     uploader = models.ForeignKey(CustomUser, related_name="image_sets_uploaded", on_delete=models.SET_NULL, null=True)
-    error_type = models.ForeignKey(ErrorMessage, related_name="images", on_delete=models.SET_NULL, null=True)
+    error_type = models.ForeignKey(ErrorMessage, related_name="student_submissions", on_delete=models.SET_NULL, null=True)
+  # explanations
     def __repr__(self):
         return f"<Upload: {self.id} for {self.error_type.message}>"
 

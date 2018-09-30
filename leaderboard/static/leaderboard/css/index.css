@@ -1,0 +1,9 @@
+.rotated-header {
+    transform: rotate(-45deg);
+    width: 10%;
+}
+
+.centered-table {
+    width: 80%;
+    margin: 20px auto;
+}

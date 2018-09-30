@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'users',
-    'rest_framework',
+    'leaderboard',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -84,6 +84,17 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#   'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': 'errors',
+#     'USER': 'root',
+#     'PASSWORD': 'root',
+#     'HOST': 'localhost',
+#     'PORT': '3306',
+#     }
+# }
 
 
 # Password validation

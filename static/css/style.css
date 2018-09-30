@@ -29,6 +29,14 @@
     font-size: small;
 }
 
+.xlarge-text {
+    font-size: x-large;
+}
+
+.xxlarge-text {
+    font-size: xx-large;
+}
+
 .modal-trigger {
     cursor: pointer;
     color: #26c6da;
@@ -37,3 +45,13 @@
 .regular-case {
     text-transform: none;
 }
+
+.flex-nav {
+    display: flex;
+}
+    .center_content {
+        margin: 0 auto;
+        font-size: normal;
+        vertical-align: top;
+        /* left: 50%; */
+    }
