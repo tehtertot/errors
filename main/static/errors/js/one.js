@@ -3,8 +3,10 @@ $("#add-exp-form").submit(function(e) {
     let data = $(this).serialize();
     $.post(url, data, function(res) {
         if (res.status) {
-            let newEntry = `<p class="left-align">${res.username} said: ${res.answer}</p>`;
+            let newEntry = `<p class="left-align"><span class="italics">${res.username} said</span>: ${res.answer}</p>`;
             $("#add-exp-form").prepend(newEntry);
+            console.log("Resetting form...")
+            document.getElementById("add-exp-form").reset();
         }
     })
     return false;
