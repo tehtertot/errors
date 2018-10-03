@@ -4,24 +4,22 @@
 {% block additionalStatic %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'errors/css/home.css' %}">
+<script src="{% static 'errors/js/filterErrors.js' %}" defer></script>
 {% endblock %}
 
 {% block navbarContent %}
 <select class="browser-default filter-menu xlarge-text" id="lang-filter" disabled>
-    <option value="2">C#</option>
-    <option value="4">Java</option>
-    <option value="3">JavaScript</option>
     <option value="1" selected>Python</option>
 </select>
-<select class="browser-default filter-menu xlarge-text" id="frm-filter" disabled>
-    <option value="1" selected>Fundamentals</option>
-    <option value="2">Flask</option>
-    <option value="4">Django</option>
+<select class="browser-default filter-menu xlarge-text" id="frm-filter">
+    <option value="1">Fundamentals</option>
+    <option value="2" selected>Flask</option>
+    <option value="3">Django</option>
 </select>
 {% endblock%}
 
 {% block content %}
-<div class="row">
+<div class="row" id="error-list">
     {% for e in errors %}
     <a href="{% url 'main:show' e.id %}">
     <div class="card col s4 error-card">

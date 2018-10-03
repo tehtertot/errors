@@ -1,0 +1,12 @@
+{% for e in errors %}
+<a href="{% url 'main:show' e.id %}">
+    <div class="card col s4 error-card">
+        <div class="card-content">
+        <span class="card-title">{{e.message}}</span>
+        </div>
+        <div class="card-action">
+            <span>Errors submitted: {{e.student_submissions.count}}</span>
+        </div>
+    </div>
+</a>
+{% endfor %}

@@ -15,9 +15,9 @@
 {% block content %}
 <div class="container row">
     <div class="col s12 w3-content w3-display-container">
-        <p></p>
         {% for e in error.student_submissions.all %}
             <div class="individual-slides">
+                <p>Submitted by: {{e.uploader.username}}</p>
                 <div class="row internal images">
                     <div class="col s4">
                         <p>Error Message</p>

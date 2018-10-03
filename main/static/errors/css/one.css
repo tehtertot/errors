@@ -2,6 +2,10 @@ form .row {
     position: relative;
 }
 
+.w3-display-container {
+    height: 100vh;
+}
+
 .row .col {
     vertical-align: top;
 }

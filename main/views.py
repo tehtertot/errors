@@ -10,9 +10,16 @@ def index(request):
     context = {
         "languages": Language.objects.all(),
         "frameworks": Framework.objects.all(),
-        "errors": ErrorMessage.objects.filter(framework_id=1, framework__language_id=1).order_by("message")
+        "errors": ErrorMessage.objects.filter(framework_id=2).order_by("message")
     }
     return render(request, 'errors/home.html', context)
+
+@login_required
+def filtered_errors(request, id):
+    context = {
+        "errors": ErrorMessage.objects.filter(framework_id=id).order_by("message")
+    }
+    return render(request, 'errors/filtered.html', context)
 
 @login_required
 def show(request, id):

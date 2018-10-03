@@ -37,7 +37,7 @@ class ErrorMessage(models.Model):
     def __repr__(self):
         return f"<Keyword: {self.message}>"
     def __str__(self):
-        return f"{self.message} ({self.framework.language.name} - {self.framework.name})"
+        return f"{self.message} - {self.display_name} ({self.framework.language.name} - {self.framework.name})"
 
 class StudentImageUpload(models.Model):
     image_error = models.CharField(max_length=255, null=True)
