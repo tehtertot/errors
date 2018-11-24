@@ -12,11 +12,12 @@ function currentDiv(n) {
 function showDivs(n) {
   var i;
   var imgs = document.getElementsByClassName("individual-slides");
-  console.log(imgs.length)
-  if (n > imgs.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = imgs.length}
-  for (i = 0; i < imgs.length; i++) {
-     imgs[i].style.display = "none";  
+  if (imgs.length > 0) {
+    if (n > imgs.length) { slideIndex = 1; }    
+    if (n < 1) { slideIndex = imgs.length; }
+    for (i = 0; i < imgs.length; i++) {
+      imgs[i].style.display = "none";  
+    }
+    imgs[slideIndex-1].style.display = "block";  
   }
-  imgs[slideIndex-1].style.display = "block";  
 }

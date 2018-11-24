@@ -3,80 +3,80 @@
 
 {% block additionalStatic %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'errors/css/one.css' %}">
-<link rel="stylesheet" href="{% static 'errors/css/imagescroll.css' %}">
 <script src="{% static 'js/modals.js' %}" defer></script>
 <script src="{% static 'js/tooltip.js' %}" defer></script>
+<script src="{% static 'js/collapsibles.js' %}" defer></script>
+<link rel="stylesheet" href="{% static 'errors/css/one.css' %}">
+<link rel="stylesheet" href="{% static 'errors/css/imagescroll.css' %}">
 <script src="{% static 'errors/js/imagescroll.js' %}" defer></script>
-<script src="{% static 'errors/js/one.js' %}" defer></script>
+<script src="{% static 'errors/js/copyPasteImages.js' %}" defer></script>
+<script src="{% static 'errors/js/addNewError.js' %}" defer></script>
+<script src="{% static 'errors/js/addComment.js' %}" defer></script>
 {% endblock %}
 
 {% block navbarContent %}{{error.message}}{% endblock %}
 {% block content %}
-<div class="container row">
-    <div class="col s12 w3-content w3-display-container">
-        {% for e in error.student_submissions.all %}
-            <div class="individual-slides">
-                <p>Submitted by: {{e.uploader.username}}</p>
-                <div class="row internal images">
-                    <div class="col s4">
-                        <p>Error Message</p>
-                        {% if e.image_error %}
-                        <img src="/{{e.image_error}}" alt="error">
-                        {% endif %}
-                    </div>
-                    <div class="col s4">
-                        <p>Code Before</p>
-                        {% if e.image_code_error %}
-                        <img src="/{{e.image_code_error}}" alt="error">
-                        {% endif %}
-                    </div>
-                    <div class="col s4">
-                        <p>Code After</p>
-                        {% if e.image_code_fix %}
-                        <img src="/{{e.image_code_fix}}" alt="">
-                        {% elif request.user == e.uploader %}
-                        <form action="{% url 'main:add_solution' e.id %}" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="file-field input-field">
-                                <div class="btn"><span>Upload</span><input type="file" name="code_fix"></div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" placeholder="your code with a solution" type="text">
-                                </div>
-                            </div>
-                            <div class="center-align">
-                                <input type="submit" value="Add" class="btn">
-                            </div>
-                        </form>
-                        {% endif %}
-                    </div>
+<a id="add-btn" class="btn-floating btn-large modal-trigger tooltipped yellow" href="#submit-images-modal" data-tooltip="Upload my {{error.message}}" data-position="left"><i class="large material-icons">add</i>
+</a>
+<div class="row" id="submitted-errors">
+    <div class="col s12 w3-content w3-display-container" >
+        {% for e in student_submissions %}
+        <div class="individual-slides">
+            <div class="row internal images">
+                <div class="col s4">
+                    <p>Error Message</p>
+                    {% if e.error_image %}
+                    <img src="/{{e.error_image}}" alt="error">
+                    {% endif %}
                 </div>
-                <div id="explanations">
-                    <div class="col s2">
-                        <p>EXPLANATIONS</p>
-                        <ul class="gray-text xs-text">
-                            <li>What were you trying to do?</li>
-                            <li>How would you describe the error in your own words?</li>
-                            <li>How did you solve this?</li>
-                        </ul>
-                    </div>
-                    <div class="col 10 responses">
-                        {% for exp in e.explanations.all %}
-                            <p class="left-align"><span class="italics">{{exp.explainer.username}} said</span>: {{exp.content}}</p>
-                        {% endfor %}
-                        <form action="/add/explanation/{{e.id}}" method="POST" class="left-align" id="add-exp-form">
-                            {% csrf_token %}
-                            <input type="text" name="exp" placeholder="add your own explanation..." class="browser-default add-explanation">
-                            <button class="btn btn-small">add</button>
-                        </form>
-                    </div>
+                <div class="col s4 middle-image">
+                    <p>Code Before</p>
+                    {% if e.code_error_image %}
+                    <img src="/{{e.code_error_image}}" alt="error">
+                    {% endif %}
                 </div>
-            </div>  
+                <div class="col s4">
+                    <p>Code After</p>
+                    {% if e.code_fixed_image %}
+                    <img src="/{{e.code_fixed_image}}" alt="">
+                    {% elif request.user == e.uploader or request.user.is_superuser %}
+                    <form action="{% url 'main:add_solution' e.id %}" method="POST" enctype="multipart/form-data" id="update-form">
+                        {% csrf_token %}
+                        <p>Figure out a solution? Paste it here:</p>
+                        <div class="target" data-image-type="code-fix"></div>
+                        <div class="center-align">
+                            <input type="submit" value="Update" class="btn">
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            <hr class="divider">
+            <div class="discussion-box">
+                <div class="col s2 response-side">
+                    <p>DISCUSSION</p>
+                    <ul class="gray-text xsmall-text">
+                        <li>How would you describe the error in your own words?</li>
+                        <li>How did you solve this?</li>
+                        <li>Which part of the code is likely causing this error?</li>
+                    </ul>
+                </div>
+                <div class="col 10 responses">
+                    <p>{{e.description}} (Submitted by: {{e.uploader.username}} on {{e.created_at}})</p>
+                    {% for c in e.comments.all %}
+                        <p><span class="italics">{{c.author.username}} said</span> ({{c.created_at}}): {{c.content}}</p>
+                    {% endfor %}
+                    <form action="/add/comment/{{e.id}}" method="POST" id="add-comment-form">
+                        {% csrf_token %}
+                        <input type="text" name="exp" placeholder="contribute to the discussion..." class="browser-default" required>
+                        <button class="btn btn-small">add</button>
+                    </form>
+                </div>
+            </div>
+        </div>  
         {% endfor %}
-        <a id="add-btn" class="btn-floating btn-large modal-trigger tooltipped yellow" href="#submit-images-modal" data-tooltip="Upload my {{error.message}}" data-position="left"><i class="large material-icons">add</i>
-        </a>
     </div>
-        {% if error.student_submissions.count > 1 %}
+        {% if student_submissions.count > 1 %}
         <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
         <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
         {% endif %}
@@ -86,11 +86,11 @@
 
 <!-- Screenshot How-To -->
 <div id="howto-screenshot-modal" class="modal">
-    <h5>How Do I Save Screenshots?</h5>
+    <h5>How Do I Get Screenshots?</h5>
     <div class="modal-content row internal">
         <div class="col s6">
             <h6>For Windows:</h6>
-            <ol>
+            <ol class="small-text">
                 <li>Have the error(s) displayed on your screen</li>
                 <li>Type "snipping tool" in your search bar and open the tool
                     <ul>
@@ -99,12 +99,13 @@
                 </li>
                 <li>In the Snipping Tool menu, click "New"</li>
                 <li>Drag a box around the errors you want to submit</li>
-                <li>If you don't like what was grabbed, just click "New" and start over. Otherwise, click "Save."</li>
+                <li>If you don't like what was grabbed, just click "New" and start over. The image is now in your clipboard!</li>
+                <li>Click on the appropriate box and paste the image (ctrl+v)</li>
             </ol>
         </div>
         <div class="col s6">
             <h6>For Macs:</h6>
-            <ol>
+            <ol class="small-text">
                 <li>Have the error(s) displayed on your screen</li>
                 <li>Press <kbd>Shift-Command-4</kbd></li>
                 <li>Drag a box around the errors you want to submit</li>
@@ -119,41 +120,32 @@
     
 <!-- Submit Images -->
 <div id="submit-images-modal" class="modal">
-    <h5>Report an {{error.message}}</h5>
     <div class="modal-content">
-        <form action="{% url 'main:add' error.id %}" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'main:add' error.id %}" method="POST" enctype="multipart/form-data" id="add-error-form">
             {% csrf_token %}
-            <div class="row interal">
-                <div class="col s1">
-                    <p class="rotated-text">Upload Screenshots<a class="modal-trigger" href="#howto-screenshot-modal"><i class="material-icons">info_outline</i></a></p>
+            <div class="row">
+                <div class="col s2">
+                    <p>Paste an image of your error:</p>
+                    <p class="grey-text form-row-header"><a class="modal-trigger" href="#howto-screenshot-modal"><i class="material-icons">info_outline</i></a></p>
                 </div>
-                <div class="col s11">
-                    <div class="file-field input-field">
-                        <div class="btn"><span>File</span><input type="file" name="error"></div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" placeholder="error message in terminal/browser" type="text">
-                        </div>
-                    </div>
-                    <div class="file-field input-field">
-                        <div class="btn"><span>File</span><input type="file" name="code_error"></div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" placeholder="your code with error" type="text">
-                        </div>
-                    </div>
-                    <div class="file-field input-field">
-                        <div class="btn"><span>File</span><input type="file" name="code_fix"></div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" placeholder="your code with a solution" type="text">
-                        </div>
-                    </div>
-                </div>
+                <div class="target col s10" data-image-type="error"></div>
             </div>
-            <p>Explanation (optional): <textarea name="explanation" class="materialize-textarea"></textarea></p>
+            <div class="row">
+                <p class="col s2">Paste an image of your code causing this error:</p>
+                <div class="target col s10" data-image-type="code-error"></div>
+            </div>
+            <div class="row">
+                <p class="col s2">Paste an image of your code fixed (optional):</p>
+                <div class="target col s10" data-image-type="code-fix"></div>
+            </div>
+                
+            <p class="tooltipped" data-tooltip="Consider: What were you trying to do? What assignment are you working on? What do you think this error means?" data-position="top">Description (optional): <textarea name="description" class="materialize-textarea"></textarea></p>
             <div class="center-align">
+                <p id="add-error" class="error"></p>
                 <input type="submit" value="Submit" class="btn">
             </div>
         </form>
-    </div>
+    </div>  
 </div>
     
 {% endblock %}

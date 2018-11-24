@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>{% block title %}{% endblock %}</title>
         {% load static %}
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
         <link rel="stylesheet" href="{% static 'css/material-style.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,6 +17,7 @@
     <body>
         <ul id="dropdown" class="dropdown-content" style="min-width:125px;">
             <li><a href="/">Errors</a></li>
+            <li><a href="{% url 'users:update' %}">Update Account</a></li>
             <li><a href="/leaderboard">Leaderboard</a></li>
             <!-- <li><a href="/glossary">Glossary</a></li> -->
             <li class="divider"></li>

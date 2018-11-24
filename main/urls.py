@@ -6,11 +6,13 @@ from django.conf.urls.static import static
 app_name = "main"
 urlpatterns = [
     path('', views.index, name="home"), 
+    path('filter/<int:id>', views.filtered_errors, name="filter_errors"),
+    path('add', views.add_error, name="add_error"),
     path('show/<int:id>', views.show, name="show"),
     path('add/<int:id>', views.add, name="add"),
-    path('update<int:id>', views.update_with_solution, name="add_solution"),
-    path('add/explanation/<int:id>', views.add_explanation, name="add_explanation"),
-    path('filter/<int:id>', views.filtered_errors, name="filter_errors"),
+    path('update/<int:id>', views.update_with_solution, name="add_solution"),
+    path('add/comment/<int:id>', views.add_comment, name="add_comment"),
+    # path('test', views.test_partial)
     # path('create', views.create, name="create"),
     # path('add_keyword/<int:error_id>/<int:keyword_id>', views.add_keyword, name="add_keyword"),
     # path('add_suggestion/<int:error_id>', views.add_suggestion, name="add_suggestion"),

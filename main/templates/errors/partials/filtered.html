@@ -10,3 +10,8 @@
     </div>
 </a>
 {% endfor %}
+<p>Don't see your error? Add one: <form action="{% url 'main:add_error' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="error" class="browser-default">
+    <input type="hidden" name="language" id="lang-form-input" value="{{language.id}}">
+    <input type="submit" value="Add" class="btn"></form></p>

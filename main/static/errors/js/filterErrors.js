@@ -1,6 +1,6 @@
-$("#frm-filter").change(function() {
-    console.log($("#frm-filter").val())
-    $.get(`/filter/${$("#frm-filter").val()}`, function(res) {
+$("#lang-filter").change(function() {
+    var languageId = $("#lang-filter").val();
+    $.get(`/filter/${languageId}`, function(res) {
         $("#error-list").html(res);
     })
 })

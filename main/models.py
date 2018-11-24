@@ -1,59 +1,83 @@
 from django.db import models
 from users.models import CustomUser
 
-# CustomUser: image_sets_uploaded, explanations, 
-
 class Language(models.Model):
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-  # frameworks
-
-    # values: Python, JavaScript, C#, Java
+    # stacks
+    # technologies
+    # language_errors
+    class Meta:
+        db_table = 'languages'
     def __repr__(self):
         return f"<Language: {self.id} - {self.name}>"
     def __str__(self):
         return f"<Language: {self.id} - {self.name}>"
 
-class Framework(models.Model):
-    name = models.CharField(max_length=30)
-    language = models.ForeignKey(Language, related_name="frameworks", on_delete=models.CASCADE)
+class MonthlyStack(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    language = models.ForeignKey(Language, related_name="stacks", on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-  # framework_errors
-    # values: Fundamentals, Flask, Django, ASP.NET Core, Angular, Express, Mongoose, Spring Boot
+    # student_submissions
+    # current_students
+    class Meta:
+        db_table = 'monthly_stacks'
+
+class Technology(models.Model):
+    name = models.CharField(max_length=30)
+    language = models.ForeignKey(Language, related_name="technologies", on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # student_submissions
+
+    class Meta:
+        db_table = 'technologies'
     def __repr__(self):
-        return f"<Framework: {self.id} - {self.name}>"
+        return f"<Technology: {self.id} - {self.name}>"
     def __str__(self):
-        return f"<Framework: {self.id} - {self.name}>"
+        return f"<Technology: {self.id} - {self.name}>"
 
 class ErrorMessage(models.Model):
     message = models.CharField(max_length=50)
     display_name = models.CharField(max_length=20, null=True)
-    framework = models.ForeignKey(Framework, related_name="framework_errors", on_delete=models.SET_NULL, null=True)
+    language = models.ForeignKey(Language, related_name="language_errors", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-  # student_submissions
+    # student_submissions
+    class Meta:
+        db_table = 'error_messages'
     def __repr__(self):
         return f"<Keyword: {self.message}>"
     def __str__(self):
-        return f"{self.message} - {self.display_name} ({self.framework.language.name} - {self.framework.name})"
+        return f"{self.message} - {self.display_name} ({self.language.name})"
 
-class StudentImageUpload(models.Model):
-    image_error = models.CharField(max_length=255, null=True)
-    image_code_error = models.CharField(max_length=255, null=True)
-    image_code_fix = models.CharField(max_length=255, null=True)
-    uploader = models.ForeignKey(CustomUser, related_name="image_sets_uploaded", on_delete=models.SET_NULL, null=True)
-    error_type = models.ForeignKey(ErrorMessage, related_name="student_submissions", on_delete=models.SET_NULL, null=True)
-  # explanations
+class StudentSubmission(models.Model):
+    description = models.TextField(null=True)
+    error_image = models.CharField(max_length=255, null=True)
+    code_error_image = models.CharField(max_length=255, null=True)
+    code_fixed_image = models.CharField(max_length=255, null=True)
+    error = models.ForeignKey(ErrorMessage, related_name="student_submissions", on_delete=models.CASCADE)
+    uploader = models.ForeignKey(CustomUser, related_name="errors_submitted", on_delete=models.SET_NULL, null=True)
+    stack = models.ForeignKey(MonthlyStack, related_name="student_submissions", on_delete=models.SET_NULL, null=True)
+    associated_technologies = models.ManyToManyField(Technology, related_name="student_submissions")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # comments
+    class Meta:
+        db_table = 'student_submissions'
     def __repr__(self):
-        return f"<Upload: {self.id} for {self.error_type.message}>"
+        return f"<StSub Object: {self.error.message} {self.created_at}"
 
-class Explanation(models.Model):
+class Comment(models.Model):
     content = models.TextField()
-    explainer = models.ForeignKey(CustomUser, related_name="explanations", on_delete=models.CASCADE)
-    associated_error = models.ForeignKey(StudentImageUpload, related_name="explanations", on_delete=models.CASCADE)
+    author = models.ForeignKey(CustomUser, related_name="comments", on_delete=models.CASCADE)
+    student_error = models.ForeignKey(StudentSubmission, related_name="comments", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     def __repr__(self):
-        return f"<Suggestion: {self.content} for {self.associated_error}>"
+        return f"<Comment: {self.content} for {self.associated_error}>"
+    class Meta:
+        db_table = 'comments'

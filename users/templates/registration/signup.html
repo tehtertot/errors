@@ -9,48 +9,48 @@
     {% csrf_token %}
     <div class="row">
       <div class="input-field col s6">
-        <input type="text" name="username" maxlength="45" autofocus required id="id_username">
+        <input type="text" name="username" maxlength="20" autofocus required id="id_username" class="validate">
         <label for="id_username" class="active">Username</label>
-        <span class="blue-text">{{ form.username.errors }}</span>
+        <span class="red-text small-text">{{ form.username.errors }}</span>
       </div>
       <div class="input-field col s6">
-        <input type="email" name="email" maxlength="45" id="id_email">
-        <label for="id_email" class="active">Email</label>
-        <span class="blue-text">{{ form.email.errors }}</span>
+        <input type="email" name="email" maxlength="45" id="id_email" required>
+        <label for="id_email" class="active" class="validate">Email</label>
+        <span class="red-text small-text">{{ form.email.errors }}</span>
       </div>
     </div>
     
     <div class="row">
       <div class="input-field col s6">
-        <input type="text" name="first_name" maxlength="45" required id="id_first_name">
+        <input type="text" name="first_name" maxlength="20" required id="id_first_name" class="validate">
         <label for="id_first_name" class="active">First Name</label>
-        <span class="blue-text">{{ form.first_name.errors }}</span>
+        <span class="red-text small-text">{{ form.first_name.errors }}</span>
       </div>
       <div class="input-field col s6">
-        <input type="text" name="last_name" maxlength="45" required id="id_last_name">
+        <input type="text" name="last_name" maxlength="20" required id="id_last_name" class="validate">
         <label for="id_last_name" class="active">Last Name</label>
-        <span class="blue-text">{{ form.last_name.errors }}</span>
+        <span class="red-text small-text">{{ form.last_name.errors }}</span>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s12">
-        <input type="text" name="favorite_candy" maxlength="45" id="id_favorite_candy">
+        <input type="text" name="favorite_candy" maxlength="20" id="id_favorite_candy">
         <label for="id_favorite_candy" class="active">Favorite Candy/Treat</label>
-        <span class="blue-text">{{ form.favorite_candy.errors }}</span>
+        <span class="red-text small-text">{{ form.favorite_candy.errors }}</span>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s6">
-        <input type="password" name="password1"  required id="id_password1">
+        <input type="password" name="password1"  required id="id_password1" minlength="8" class="validate">
         <label for="id_password1" class="active">Password</label>
-        <span class="blue-text">{{ form.password1.errors }}</span>
+        <span class="red-text small-text">{{ form.password1.errors }}</span>
       </div>
       <div class="input-field col s6">
-        <input type="password" name="password2" maxlength="45" required id="id_password2">
+        <input type="password" name="password2" maxlength="45" required id="id_password2" minlength="8" class="validate">
         <label for="id_password2" class="active">Confirm Password</label>
-        <span class="blue-text">{{ form.password2.errors }}</span>
+        <span class="red-text small-text">{{ form.password2.errors }}</span>
       </div>
     </div>
 

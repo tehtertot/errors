@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block additionalStatic %}
+{% load static %}
+<script src="{% static 'js/dropdowns.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Update Account Information</h3>
+    <form action="{% url 'users:update' %}" method="post" class="col s12">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s6">
+                <input type="text" name="fname" value="{{current_user.first_name}}" required class="validate">
+                <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s6">
+                <input type="text" name="lname" value="{{current_user.last_name}}" required class="validate">
+                <label for="last_name">Last Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input type="text" name="treat" value="{{current_user.favorite_treat}}">
+                <label for="treat">Favorite Treat</label>
+            </div>
+            <div class="input-field col s6">
+                <select name="stack" required class="validate">
+                    {% for s in current_stacks %}
+                    <option value="{{s.id}}" {% if s == current_user.current_stack %} selected {% endif %}>{{s.language.name}}</option>
+                    {% endfor %}
+                </select>
+                <label for="stack">Current Stack</label>
+            </div>
+        </div>
+        <button class="waves-effect waves-light btn">Update</button>
+    </form>
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{message.tags}}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+{% endblock %}

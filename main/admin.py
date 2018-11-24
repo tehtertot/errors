@@ -1,20 +1,23 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Language, Framework, ErrorMessage, StudentImageUpload, Explanation
+from .models import Language, Technology, MonthlyStack, ErrorMessage, StudentSubmission, Comment
 
 class LanguageAdmin(admin.ModelAdmin):
     pass
-class FrameworkAdmin(admin.ModelAdmin):
+class TechnologyAdmin(admin.ModelAdmin):
+    pass
+class StackAdmin(admin.ModelAdmin):
     pass
 class ErrorMessageAdmin(admin.ModelAdmin):
     pass
-class StudentImageUploadAdmin(admin.ModelAdmin):
+class StudentSubmissionAdmin(admin.ModelAdmin):
     pass
-class ExplanationAdmin(admin.ModelAdmin):
+class CommentAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(Language, LanguageAdmin)
-admin.site.register(Framework, FrameworkAdmin)
+admin.site.register(Technology, TechnologyAdmin)
+admin.site.register(MonthlyStack, StackAdmin)
 admin.site.register(ErrorMessage, ErrorMessageAdmin)
-admin.site.register(StudentImageUpload, StudentImageUploadAdmin)
-admin.site.register(Explanation, ExplanationAdmin)
+admin.site.register(StudentSubmission, StudentSubmissionAdmin)
+admin.site.register(Comment, CommentAdmin)

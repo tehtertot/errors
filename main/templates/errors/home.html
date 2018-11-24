@@ -8,15 +8,12 @@
 {% endblock %}
 
 {% block navbarContent %}
-<select class="browser-default filter-menu xlarge-text" id="lang-filter" disabled>
-    <option value="1" selected>Python</option>
+<select class="browser-default filter-menu xlarge-text" id="lang-filter">
+    {% for s in stacks %}
+    <option value="{{s.id}}" {% if active_stack == s %} selected {% endif %}>{{s.language.name}}</option>
+    {% endfor %}
 </select>
-<select class="browser-default filter-menu xlarge-text" id="frm-filter">
-    <option value="1">Fundamentals</option>
-    <option value="2" selected>Flask</option>
-    <option value="3">Django</option>
-</select>
-{% endblock%}
+{% endblock %}
 
 {% block content %}
 <div class="row" id="error-list">
@@ -32,5 +29,10 @@
     </div>
     </a>
     {% endfor %}
+    <p>Don't see your error? Add one: <form action="{% url 'main:add_error' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="error" class="browser-default">
+        <input type="hidden" name="language" id="lang-form-input" value="{{active_stack.language.id}}">
+        <input type="submit" value="Add" class="btn"></form></p>
 </div>
 {% endblock %}

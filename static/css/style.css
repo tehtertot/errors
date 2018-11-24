@@ -21,6 +21,10 @@
         color: #9e9e9e;
     }
 
+.xxsmall-text {
+    font-size: xx-small;
+}
+
 .xsmall-text {
     font-size: x-small;
 }
@@ -55,3 +59,19 @@
         vertical-align: top;
         /* left: 50%; */
     }
+
+.warning {
+    color: orange;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+.italics {
+    font-style: italic;
+}

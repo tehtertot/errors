@@ -2,10 +2,6 @@ select.filter-menu {
     display: inline;
 }
 
-#lang-filter {
-    width: 40%;
-}
-
 #frm-filter {
     width: 55%;
 }

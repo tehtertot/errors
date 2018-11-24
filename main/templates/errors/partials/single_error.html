@@ -1,0 +1,49 @@
+<div class="individual-slides">
+    <div class="row internal images">
+        <div class="col s4">
+            <p>Error Message</p>
+            <img src="/{{new_submission.error_image}}" alt="error">
+        </div>
+        <div class="col s4 middle-image">
+            <p>Code Before</p>
+            <img src="/{{new_submission.code_error_image}}" alt="error">
+        </div>
+        <div class="col s4">
+            <p>Code After</p>
+            {% if new_submission.code_fixed_image %}
+            <img src="/{{new_submission.code_fixed_image}}" alt="">
+            {% elif request.user == new_submission.uploader %}
+            <form action="{% url 'main:add_solution' new_submission.id %}" method="POST" enctype="multipart/form-data" id="update-form">
+                {% csrf_token %}
+                <p>Figure out a solution? Paste it here:</p>
+                <div class="target" data-image-type="code-fix"></div>
+                <div class="center-align">
+                    <input type="submit" value="Update" class="btn">
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+    <hr class="divider">
+    <div class="discussion-box">
+        <div class="col s2 response-side">
+            <p>DISCUSSION</p>
+            <ul class="gray-text xsmall-text">
+                <li>How would you describe the error in your own words?</li>
+                <li>How did you solve this?</li>
+                <li>Which part of the code is likely causing this error?</li>
+            </ul>
+        </div>
+        <div class="col 10 responses">
+            <p>{{new_submission.description}} (Submitted by: {{new_submission.uploader.username}} on {{new_submission.created_at}})</p>
+            {% for c in new_submission.comments.all %}
+                <p><span class="italics">{{c.author.username}} said</span> ({{c.created_at}}): {{c.content}}</p>
+            {% endfor %}
+            <form action="/add/comment/{{new_submission.id}}" method="POST" class="left-align" id="add-comment-form">
+                {% csrf_token %}
+                <input type="text" name="exp" placeholder="contribute to the discussion..." class="browser-default" required>
+                <button class="btn btn-small">add</button>
+            </form>
+        </div>
+    </div>
+</div>
