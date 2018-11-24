@@ -12,10 +12,13 @@
             {{ field }}
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {% for error in field.errors %}
-                <span class="help-block">{{ error }}</span>
+            <span class="help-block">{{ error }}</span>
             {% endfor %}
         </div>
-            {% endfor %}
+        {% endfor %}
+        {% if form.errors %}
+        <p class="error">username or password was incorrect</p>
+        {% endif %}
         <button class="btn">Log In</button>
     </form>
     <p><a href="/accounts/signup">Don't have an account? Register here.</a></p>
