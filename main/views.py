@@ -111,7 +111,7 @@ def update_with_solution(request, id):
             submission.code_fixed_image = "media/" + filename
             submission.save()
             return JsonResponse({'imageURL': f"media/{filename}"})
-    return redirect(reverse('main:show', args=(submission.error_type.id,)))
+    return redirect(reverse('main:show', args=(submission.error.id,)))
     return JsonResponse(status=500)
 
 @login_required

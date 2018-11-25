@@ -140,7 +140,7 @@ $(".target").contextmenu(function(e) {
     $('.active').removeClass('active');
     $(this).addClass('active');
     
-    let toastMessage = navigator.appVersion.includes("Macintosh") ? "Press ⌘-v to paste" : "Press ctrl+v to paste";
+    let toastMessage = navigator.appVersion.includes("Macintosh") ? "Press ⌘-v to paste" : "Press ctrl-v to paste";
 
     M.toast({html: toastMessage, displayLength: 4000});
     

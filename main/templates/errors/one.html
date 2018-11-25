@@ -3,6 +3,7 @@
 
 {% block additionalStatic %}
 {% load static %}
+<script src="{% static 'errors/js/customTooltip.js' %}" defer></script>
 <script src="{% static 'js/modals.js' %}" defer></script>
 <script src="{% static 'js/tooltip.js' %}" defer></script>
 <script src="{% static 'js/collapsibles.js' %}" defer></script>
@@ -100,16 +101,16 @@
                 <li>In the Snipping Tool menu, click "New"</li>
                 <li>Drag a box around the errors you want to submit</li>
                 <li>If you don't like what was grabbed, just click "New" and start over. The image is now in your clipboard!</li>
-                <li>Click on the appropriate box and paste the image (ctrl+v)</li>
+                <li>Click on the appropriate box and paste the image (ctrl-v)</li>
             </ol>
         </div>
         <div class="col s6">
             <h6>For Macs:</h6>
             <ol class="small-text">
                 <li>Have the error(s) displayed on your screen</li>
-                <li>Press <kbd>Shift-Command-4</kbd></li>
+                <li>Press <kbd>⌘-ctrl-shift-4</kbd></li>
                 <li>Drag a box around the errors you want to submit</li>
-                <li>The screenshot should now be saved as a .png file on your desktop</li>
+                <li>Click on the appropriate box and paste the image (⌘+v)</li>
             </ol>
         </div>
     </div>
@@ -126,7 +127,7 @@
             <div class="row">
                 <div class="col s2">
                     <p>Paste an image of your error:</p>
-                    <p class="grey-text form-row-header"><a class="modal-trigger" href="#howto-screenshot-modal"><i class="material-icons">info_outline</i></a></p>
+                    <p class="grey-text form-row-header"><a class="modal-trigger how-to-screenshot tooltipped" href="#howto-screenshot-modal" data-position="right"><i class="material-icons">info_outline</i></a></p>
                 </div>
                 <div class="target col s10" data-image-type="error"></div>
             </div>
